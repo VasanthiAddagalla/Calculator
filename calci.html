@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Calculator</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{display:flex;justify-content:center;align-items:center;min-height:100vh;background:#222;font-family:monospace}
+.calc{background:#333;border-radius:10px;padding:16px;width:260px}
+input{width:100%;background:#000;color:#0f0;font-size:2rem;text-align:right;padding:12px;border:none;border-radius:6px;margin-bottom:12px;font-family:monospace;outline:2px solid #0f0}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+button{height:52px;border:none;border-radius:6px;font-size:1.1rem;cursor:pointer;background:#555;color:#fff}
+button:hover{background:#777}
+button:active{transform:scale(0.95)}
+.op{background:#884400;color:#ffa500}
+.clr{background:#660022;color:#ff4466}
+.eq{background:#004422;color:#00ff88}
+.span2{grid-column:span 2}
+</style>
+</head>
+<body>
+<div class="calc">
+  <input id="screen" autofocus placeholder="0"/>
+  <div class="grid">
+    <button class="clr" onclick="clr()">AC</button>
+    <button class="clr" onclick="del()">⌫</button>
+    <button class="op"  onclick="add('%')">%</button>
+    <button class="op"  onclick="add('/')">÷</button>
+    <button onclick="add('7')">7</button>
+    <button onclick="add('8')">8</button>
+    <button onclick="add('9')">9</button>
+    <button class="op"  onclick="add('*')">×</button>
+    <button onclick="add('4')">4</button>
+    <button onclick="add('5')">5</button>
+    <button onclick="add('6')">6</button>
+    <button class="op"  onclick="add('-')">−</button>
+    <button onclick="add('1')">1</button>
+    <button onclick="add('2')">2</button>
+    <button onclick="add('3')">3</button>
+    <button class="op"  onclick="add('+')">+</button>
+    <button class="span2" onclick="add('0')">0</button>
+    <button onclick="add('.')">.</button>
+    <button class="eq"  onclick="calc()">=</button>
+  </div>
+</div>
+
+<script>
+  const s = document.getElementById('screen');
+  s.focus();
+
+  function add(v){ s.value += v; s.focus(); }
+  function clr() { s.value = ''; s.focus(); }
+  function del() { s.value = s.value.slice(0,-1); s.focus(); }
+  function calc(){
+    try{ s.value = parseFloat(eval(s.value).toPrecision(12)); }
+    catch{ s.value = 'Error'; }
+    s.focus();
+  }
+
+  s.addEventListener('keydown', e => {
+    if(e.key === 'Enter') calc();
+  });
+</script>
+</body>
+</html>
